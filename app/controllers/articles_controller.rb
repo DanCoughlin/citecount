@@ -2,12 +2,13 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.json
   def index
-    @articles = Article.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @articles }
-    end
+     @articles = Article.where(:reference_type => "source").uniq.pluck(:journal)
+#    @articles = Article.all
+#
+#    respond_to do |format|
+#      format.html # index.html.erb
+#      format.json { render json: @articles }
+#    end
   end
 
   # GET /articles/1
