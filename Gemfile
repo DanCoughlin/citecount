@@ -5,10 +5,11 @@ gem 'rails', '3.2.13'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
 gem 'activeadmin'
-gem 'sqlite3'
-gem 'mysql2', '0.3.11'
+gem 'sqlite3', :group => [:development, :test]
+group :production do
+  gem 'mysql2', '0.3.11'
+end
 gem 'spreadsheet'
 gem 'kaminari'
 
