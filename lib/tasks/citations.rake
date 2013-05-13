@@ -117,7 +117,7 @@ namespace :citation do
   desc 'do something'
   task :wacky => :environment do
     # set up the spreadsheets
-    ss = MyCite.new("../savedrecs.xls")
+    ss = MyCite.new("savedrecs.xls")
     ss.parse_citations
   end
 end
