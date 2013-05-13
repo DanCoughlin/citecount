@@ -6,6 +6,7 @@ gem 'rails', '3.2.13'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'activeadmin'
+gem 'pg'
 gem 'sqlite3', :group => [:development, :test]
 group :production do
   gem 'mysql2', '0.3.11'
