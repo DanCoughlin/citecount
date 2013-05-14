@@ -2,8 +2,22 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.json
   def index
-     @articles = Article.where(:reference_type => "source").uniq.pluck(:journal)
-#    @articles = Article.all
+    # get unique titles for source docs
+     #@unique = Article.where(:reference_type => "source").uniq.pluck(:journal)
+     #@articles = []
+     #@unique.each do |u|
+     # a = Article.where(:journal => u, :reference_type => "source")
+     # @articles << a
+     #end
+    # get the source articles
+    art = Article.where(:reference_type => "source")
+    @articles = {}
+    art.each do |a|
+      ids = a.citation_ids.delete(a.id)
+      #c = Article.find_all_by_id(a.citation_ids)
+      c = Article.find(:all, :conditions=> {:id => a.citation_ids, :reference_type => 'citation'})
+      @articles[a] = c
+    end
 #
 #    respond_to do |format|
 #      format.html # index.html.erb

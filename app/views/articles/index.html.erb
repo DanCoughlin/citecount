@@ -11,18 +11,35 @@
     <th></th>
     <th></th>
   </tr>
-
-<% @articles.each do |article| %>
-  <tr>
-    <td><%= article.title %></td>
-    <td><%= article.journal %></td>
-    <td><%= article.reference_type %></td>
-    <td><%= article.author %></td>
-    <td><%= article.year %></td>
-    <td><%= link_to 'Show', article %></td>
-    <td><%= link_to 'Edit', edit_article_path(article) %></td>
-    <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
+  <%# @articles.inspect %>
+  <% @articles.each do |key, value| %>
+    <tr>
+      <td><%= key.journal %></td>
+      <td><%= key.reference_type %></td>
+    </tr>
+    <% value.each do |v| %>
+      <tr>
+        <td>&nbsp;</td>
+        <td><%= v.journal %></td>
+        <td><%= v.reference_type %></td>
+      </tr>
+    <% end %>
+  <% end %>
+<% if false %>
+  <%= @articles.count %>
+  <% count = 0 %>
+  <% @articles.each do |article| %>
+      <tr>
+        <td><%= article.title %></td>
+        <td><%= article.journal %></td>
+        <td><%= article.reference_type %></td>
+        <td><%= article.author %></td>
+        <td><%= article.year %></td>
+        <td><%= link_to 'Show', article %></td>
+        <td><%= link_to 'Edit', edit_article_path(article) %></td>
+        <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
 <% end %>
 </table>
 
