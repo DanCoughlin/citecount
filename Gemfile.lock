@@ -92,6 +92,8 @@ GEM
     mime-types (1.23)
     multi_json (1.7.3)
     mysql2 (0.3.11)
+    numbers_in_words (0.2.0)
+      activesupport
     orm_adapter (0.4.0)
     pg (0.15.1)
     polyamorous (0.5.0)
@@ -158,6 +160,7 @@ DEPENDENCIES
   jquery-rails
   kaminari
   mysql2 (= 0.3.11)
+  numbers_in_words
   pg
   rails (= 3.2.13)
   sass-rails (~> 3.2.3)

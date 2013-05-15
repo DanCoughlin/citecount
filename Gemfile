@@ -14,6 +14,7 @@ group :production do
 end
 gem 'spreadsheet'
 gem 'kaminari'
+gem 'numbers_in_words'
 
 # Gems used only for assets and not required
 # in production environments by default.

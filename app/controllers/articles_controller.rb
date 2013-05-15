@@ -1,28 +1,33 @@
 class ArticlesController < ApplicationController
+  require 'numbers_in_words'
+  require 'numbers_in_words/duck_punch'
   # GET /articles
   # GET /articles.json
   def index
-    # get unique titles for source docs
-     #@unique = Article.where(:reference_type => "source").uniq.pluck(:journal)
-     #@articles = []
-     #@unique.each do |u|
-     # a = Article.where(:journal => u, :reference_type => "source")
-     # @articles << a
-     #end
     # get the source articles
-    art = Article.where(:reference_type => "source")
+    @total = Article.where(:reference_type => "source").count
+    @art = Article.order("journal").where(:reference_type => "source").page(params[:page]).per(25)
     @articles = {}
-    art.each do |a|
-      ids = a.citation_ids.delete(a.id)
-      #c = Article.find_all_by_id(a.citation_ids)
-      c = Article.find(:all, :conditions=> {:id => a.citation_ids, :reference_type => 'citation'})
-      @articles[a] = c
+    # create a hash of citation articles for each source article
+    @art.each do |a|
+      if @articles.has_key?(a.journal) == false
+        @articles[a.journal] = {} 
+        @articles[a.journal][:count] = 0
+      end
+      @articles[a.journal][:count] += 1
+      # find all the citation articles for this article
+      citation = Article.find(:all, :conditions=> {:id => a.citation_ids, :reference_type => 'citation'})
+
+      # looping over the list of citations for this article
+      citation.each do |c|
+        if c.journal.blank? == false
+          if @articles[a.journal].has_key?(c.journal) == false
+            @articles[a.journal][c.journal] = 0
+          end
+          @articles[a.journal][c.journal] += 1
+        end
+      end
     end
-#
-#    respond_to do |format|
-#      format.html # index.html.erb
-#      format.json { render json: @articles }
-#    end
   end
 
   # GET /articles/1

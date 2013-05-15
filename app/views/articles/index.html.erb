@@ -1,48 +1,28 @@
-<h1>Listing articles</h1>
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Journal</th>
-    <th>Reference type</th>
-    <th>Author</th>
-    <th>Year</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-  <%# @articles.inspect %>
-  <% @articles.each do |key, value| %>
-    <tr>
-      <td><%= key.journal %></td>
-      <td><%= key.reference_type %></td>
-    </tr>
-    <% value.each do |v| %>
-      <tr>
-        <td>&nbsp;</td>
-        <td><%= v.journal %></td>
-        <td><%= v.reference_type %></td>
-      </tr>
-    <% end %>
+<h1>Articles</h1>
+<p>
+Listing the names of Journals that have been published, the number in parens indicates the number of articles published in that journal.
+If you click on the Journal name you will see a listing of cited journals from the article(s) published in the journal.
+</p>
+<%= paginate @art %>
+<div class="accordion" id="accordion1">
+  <% @articles.each_with_index do |(key, value), index| %>
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-present="#accordion<%= index %>" href="#collapse<%= index.in_words %>"><%= index+1 %>) <%= key.titleize %> (<%= value[:count] %>)</a>
+    </div>
+    <div id="collapse<%= index.in_words %>" class="accordion-body collapse">
+      <div class="accordion-inner">
+      <% value = value.delete_if { |k| k.to_s.match(/count/) } %>
+      <% value.sort_by{ |ke,va| ke}.each do |v,count| %>
+      <%# value.each do |v,count| %>
+        <% if not v.blank? %><%= v.titleize %> (<%= count %>)<br /><% end %>
+      <% end %>
+      </div>
+    </div>
+  </div>
   <% end %>
-<% if false %>
-  <%= @articles.count %>
-  <% count = 0 %>
-  <% @articles.each do |article| %>
-      <tr>
-        <td><%= article.title %></td>
-        <td><%= article.journal %></td>
-        <td><%= article.reference_type %></td>
-        <td><%= article.author %></td>
-        <td><%= article.year %></td>
-        <td><%= link_to 'Show', article %></td>
-        <td><%= link_to 'Edit', edit_article_path(article) %></td>
-        <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-<% end %>
-</table>
+</div>
 
 <br />
-
-<%= link_to 'New Article', new_article_path %>
+<%= paginate @art %>
