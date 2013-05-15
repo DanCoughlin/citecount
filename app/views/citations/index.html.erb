@@ -1,5 +1,8 @@
 <h1>Citations</h1>
-<%= @citations.size %> cited journals
+<p>
+<%= @citations.size %> cited journals in 500 source articles.  The % given next to the number cited is
+the percent of times out of 500 source articles this journal was used.  So number of times cited/500.
+</p>
 <table class="table table-striped table-hover">
   <tr>
     <th>Journal</th>
@@ -9,11 +12,9 @@
 <% @journals.each do |journal, count| %>
   <tr>
     <td><%= journal %></td>
-    <td><%= count %></td> 
+    <td><%= count %> (<%= number_to_percentage(count.to_f/500.0) %>)</td> 
   </tr>
 <% end %>
 </table>
 
-<br />
 
-<%= link_to 'New Citation', new_citation_path %>
