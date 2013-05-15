@@ -2,7 +2,15 @@ class CitationsController < ApplicationController
   # GET /citations
   # GET /citations.json
   def index
-    @citations = Citation.all
+    #@citations = Citation.all
+    @citations = Article.order("journal").where(:reference_type => 'citation')
+    @journals = {}
+    @citations.each do |c|
+      if not @journals.has_key?(c.journal)
+        @journals[c.journal] = 0
+      end
+      @journals[c.journal] += 1
+    end
 
     respond_to do |format|
       format.html # index.html.erb
